@@ -19,7 +19,7 @@ const TodoItem = ({todo}) => {
 const Todos = () => {
   const queryClient = useQueryClient();
 
-  const {register, handleSubmit, formState: {errors, isSubmitting, isValid}} = useForm();
+  const {register, handleSubmit, formState: {errors, isSubmitting, isValid}, setValue} = useForm();
 
   const {data, isLoading} = useQuery('todos', 
   async () => {
@@ -33,7 +33,8 @@ const Todos = () => {
   const mutation = useMutation(addNewTodo, {
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries('todos')
+      queryClient.invalidateQueries('todos');
+      setValue('description', undefined);
     },
   })
 
